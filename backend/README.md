@@ -38,7 +38,7 @@ The request body must be a JSON object containing the following fields:
         "_id": "67b08ac93a9fd71ffbc8b73a",
         "__v": 0
     },
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2IwOGFjOTNhOWZkNzFmZmJjOGI3M2EiLCJpYXQiOjE3Mzk2MjMxMTN9.Ki5xxoiKKhd_g1ZCz4bi5tvV0jp5DpmdCCWspkaM9GU"
+    "token": "JWT TOKEN"
 }
 
 
