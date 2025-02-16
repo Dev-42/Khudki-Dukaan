@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const connectToDB = require("../backend/db/db");
 const userRoutes = require("../backend/routes/user.routes");
+const driverRoutes = require("../backend/routes/driver.routes");
 
 dotenv.config();
 const app = express();
@@ -17,5 +18,6 @@ app.get("/", (req, res) => {
 });
 
 app.use("/users", userRoutes);
+app.use("/drivers", driverRoutes);
 
 module.exports = app;
