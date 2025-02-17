@@ -45,5 +45,6 @@ router.get(
   authMiddleWare.authDriver,
   driverController.getDriverProfile
 );
+router.get("/logout", authMiddleWare.authDriver, driverController.logOutDriver);
 
 module.exports = router;
