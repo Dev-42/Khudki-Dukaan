@@ -32,3 +32,20 @@ module.exports.registerDriver = async (req, res, next) => {
   const token = driver.generateToken();
   return res.status(201).json({ token: token, driver: driver });
 };
+
+module.exports.loginDriver = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    res.status(400).json({ errors: errors.array() });
+  }
+  const { email, password } = req.body;
+  const driverRes = await driverService.findDriver({ email, password, res });
+  return driverRes;
+};
+module.exports.getDriverProfile = async (req, res, next) => {
+  try {
+    res.status(200).json({ driver: req.driver });
+  } catch (e) {
+    res.status(500).send(e.message);
+  }
+};
