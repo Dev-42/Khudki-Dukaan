@@ -1,8 +1,9 @@
 import React from "react";
+import Homepage from "@/components/pages/Homepage";
 export default function Home() {
   return (
     <div>
-      <h1>Khudki Dukaan</h1>
+      <Homepage />
     </div>
   );
 }
