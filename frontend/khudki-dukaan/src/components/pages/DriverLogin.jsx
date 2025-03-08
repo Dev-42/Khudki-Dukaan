@@ -10,6 +10,7 @@ import {
   FiEyeOff,
   FiTruck,
 } from "react-icons/fi";
+import { FaCar } from "react-icons/fa";
 
 const DriverLogin = () => {
   const [email, setEmail] = useState("");
@@ -19,6 +20,8 @@ const DriverLogin = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log({ email, password });
+    setEmail("");
+    setPassword("");
   };
 
   return (
@@ -75,7 +78,7 @@ const DriverLogin = () => {
           </div>
 
           <button className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white font-bold py-3 rounded-lg shadow-lg transition-transform duration-300 transform hover:scale-105">
-            <FiTruck className="text-lg" /> Drive In
+            <FaCar className="text-lg" /> Drive In
           </button>
         </form>
 
