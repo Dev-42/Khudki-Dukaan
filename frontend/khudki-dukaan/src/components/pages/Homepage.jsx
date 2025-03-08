@@ -8,7 +8,7 @@ const Homepage = () => {
 
   const handleClick = () => {
     console.log("clicked");
-    router.push("/login"); // Client-side navigation
+    router.push("/user/login"); // Client-side navigation
   };
 
   return (
