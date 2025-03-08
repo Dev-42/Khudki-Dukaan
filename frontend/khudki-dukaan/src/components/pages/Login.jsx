@@ -105,7 +105,7 @@ const Login = () => {
 
         {/* Driver Sign In */}
         <Link
-          href="/driver-login"
+          href="/driver/login"
           className="w-full flex items-center justify-center bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800 text-white font-semibold py-3 rounded-lg mt-6 shadow-lg transition-transform duration-300 transform hover:scale-105"
         >
           Sign in as Driver
