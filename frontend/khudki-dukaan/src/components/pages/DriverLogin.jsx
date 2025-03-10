@@ -16,10 +16,16 @@ const DriverLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [driver, setDriver] = useState({});
+  console.log(driver);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log({ email, password });
+    const driverCredentials = {
+      email: email,
+      password: password,
+    };
+    setDriver(driverCredentials);
     setEmail("");
     setPassword("");
   };
@@ -86,7 +92,7 @@ const DriverLogin = () => {
         <p className="text-center text-gray-400 mt-4">
           New to the crew?{" "}
           <Link
-            href="/signup"
+            href="/driver/register"
             className="text-red-400 hover:underline flex items-center justify-center gap-1 transition-transform duration-300 hover:scale-110"
           >
             <FiUserPlus /> Become a Driver
