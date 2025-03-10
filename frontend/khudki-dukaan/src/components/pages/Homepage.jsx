@@ -1,10 +1,13 @@
 "use client";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useContext } from "react";
 import Button from "@mui/material/Button";
+import { UserDataContext } from "@/context/UserContext";
 
 const Homepage = () => {
   const router = useRouter();
+  const user = useContext(UserDataContext);
+  console.log("User is", user);
 
   const handleClick = () => {
     console.log("clicked");
