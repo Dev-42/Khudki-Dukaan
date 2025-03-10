@@ -10,15 +10,24 @@ import {
   FiEyeOff,
   FiTruck,
 } from "react-icons/fi";
+import { FaCar } from "react-icons/fa";
 
 const DriverLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [driver, setDriver] = useState({});
+  console.log(driver);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log({ email, password });
+    const driverCredentials = {
+      email: email,
+      password: password,
+    };
+    setDriver(driverCredentials);
+    setEmail("");
+    setPassword("");
   };
 
   return (
@@ -75,7 +84,7 @@ const DriverLogin = () => {
           </div>
 
           <button className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white font-bold py-3 rounded-lg shadow-lg transition-transform duration-300 transform hover:scale-105">
-            <FiTruck className="text-lg" /> Drive In
+            <FaCar className="text-lg" /> Drive In
           </button>
         </form>
 
@@ -83,7 +92,7 @@ const DriverLogin = () => {
         <p className="text-center text-gray-400 mt-4">
           New to the crew?{" "}
           <Link
-            href="/signup"
+            href="/driver/register"
             className="text-red-400 hover:underline flex items-center justify-center gap-1 transition-transform duration-300 hover:scale-110"
           >
             <FiUserPlus /> Become a Driver

@@ -96,7 +96,7 @@ const Login = () => {
         <p className="text-center text-white mt-4">
           New here?{" "}
           <Link
-            href="/signup"
+            href="/user/register"
             className="text-yellow-300 hover:underline flex items-center justify-center gap-1 transition-transform duration-300 hover:scale-110"
           >
             <FiUserPlus /> Create an Account
