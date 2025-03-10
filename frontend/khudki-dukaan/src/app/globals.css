@@ -13,6 +13,24 @@
     --foreground: #ededed;
   }
 }
+/* Toast styles for better mobile responsiveness */
+@media (max-width: 640px) {
+  .Toastify__toast-container {
+    width: 90% !important; /* Make it take less space */
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
+  
+  .Toastify__toast {
+    font-size: 14px !important; /* Reduce font size for smaller screens */
+    padding: 8px !important; /* Adjust padding */
+  }
+  
+  .Toastify__toast-body {
+    word-wrap: break-word;
+    white-space: normal !important;
+  }
+}
 
 body {
   color: var(--foreground);
