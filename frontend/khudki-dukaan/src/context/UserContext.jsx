@@ -1,17 +1,22 @@
 "use client";
-import React, { createContext } from "react";
+import React, { createContext, useState } from "react";
 
-export const UserDataContext = createContext();
+export const UserDataContext = createContext(null);
 
-const UserContext = ({ children }) => {
-  const user = "Dev";
+const UserContextProvider = ({ children }) => {
+  const [user, setUser] = useState({
+    fullName: {
+      firstName: "",
+      lastName: "",
+    },
+    email: "",
+  });
+
   return (
-    <div>
-      <UserDataContext.Provider value={user}>
-        {children}
-      </UserDataContext.Provider>
-    </div>
+    <UserDataContext.Provider value={{ user, setUser }}>
+      {children}
+    </UserDataContext.Provider>
   );
 };
 
-export default UserContext;
+export default UserContextProvider;

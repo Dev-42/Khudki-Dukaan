@@ -1,6 +1,7 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   FiUser,
   FiMail,
@@ -14,11 +15,14 @@ import {
 } from "react-icons/fi";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import axios from "axios";
+import { UserDataContext } from "@/context/UserContext";
 // Initialize toast notifications
 import { ToastContainer } from "react-toastify";
 
 const Signup = () => {
+  const router = useRouter();
+  const { user, setUser } = useContext(UserDataContext);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -33,7 +37,7 @@ const Signup = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (!agreeToPolicy) {
       toast.error("You must agree to the Privacy Policy to continue.", {
@@ -48,18 +52,53 @@ const Signup = () => {
       return;
     }
 
-    toast.success("Signup successful! 🎉", {
-      position: "top-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      theme: "colored",
-    });
-
     console.log("User Data:", formData);
-    setFormData({ firstName: "", lastName: "", email: "", password: "" });
+    const userData = {
+      fullName: {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+      },
+      email: formData.email,
+      password: formData.password,
+    };
+
+    try {
+      console.log(process.env.NEXT_PUBLIC_API_BASE_URL);
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/users/register`,
+        userData
+      );
+      console.log(response);
+      if (response.status === 201) {
+        const data = response.data;
+        const registeredUser = data.user;
+        console.log("Registered user is", registeredUser);
+        setUser(registeredUser);
+        console.log("User from context", user);
+        toast.success("Signup successful! 🎉", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "colored",
+        });
+        router.push("/user/login");
+      }
+
+      setFormData({ firstName: "", lastName: "", email: "", password: "" });
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Signup failed.", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
+      });
+    }
   };
 
   return (
