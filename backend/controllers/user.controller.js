@@ -37,11 +37,18 @@ module.exports.registerUser = async (req, res, next) => {
 module.exports.loginUser = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    res.status(400).json({ errors: errors.array() });
+    return res.status(400).json({ errors: errors.array() });
   }
+
   const { email, password } = req.body;
-  const userRes = await userService.findUser({ email, password, res });
-  return userRes;
+  const userRes = await userService.findUser({ email, password });
+
+  if (userRes.error) {
+    return res.status(userRes.status).json({ message: userRes.error }); // ✅ Ensures only one response
+  }
+
+  res.cookie("token", userRes.token);
+  return res.status(200).json(userRes);
 };
 
 module.exports.getUserProfile = async (req, res, next) => {

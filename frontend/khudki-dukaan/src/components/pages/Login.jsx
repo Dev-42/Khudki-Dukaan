@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   FiMail,
   FiLock,
@@ -9,23 +10,77 @@ import {
   FiEye,
   FiEyeOff,
 } from "react-icons/fi";
+import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 const Login = () => {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [user, setUser] = useState({});
-  console.log(user);
+  // console.log(user);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const userData = {
-      email: email,
-      password: password,
-    };
-    setUser(userData);
-    setEmail("");
-    setPassword("");
+    const userData = { email, password };
+
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/users/login`,
+        userData
+      );
+      console.log("Response from login", response);
+
+      if (response.status === 200) {
+        const data = response.data;
+        console.log("Logged in user:", data.user);
+        setUser(data.user);
+
+        toast.success("Login successful! 🎉", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "colored",
+        });
+
+        setTimeout(() => {
+          router.push("/dashboard"); // Change to your desired route after login
+        }, 3000);
+
+        setEmail("");
+        setPassword("");
+      }
+    } catch (error) {
+      if (error.response?.status === 400 && error.response.data?.errors) {
+        error.response.data.errors.forEach((err) => {
+          toast.error(err.msg, {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            theme: "dark",
+          });
+        });
+      } else {
+        toast.error(error.response?.data?.message || "Login failed.", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "dark",
+        });
+      }
+    }
   };
 
   return (
@@ -33,6 +88,7 @@ const Login = () => {
       className="flex items-center justify-center min-h-screen bg-cover bg-center px-4"
       style={{ backgroundImage: "url('/ZippyRideBackground.webp')" }}
     >
+      <ToastContainer />
       <div className="bg-white/20 backdrop-blur-md shadow-2xl rounded-2xl p-[20px] w-full max-w-md border border-white/30 transition-all duration-300">
         {/* Logo */}
         <div className="flex justify-center mb-6">

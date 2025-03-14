@@ -84,7 +84,9 @@ const Signup = () => {
           draggable: true,
           theme: "colored",
         });
-        router.push("/user/login");
+        setTimeout(() => {
+          router.push("/user/login");
+        }, 3000);
       }
 
       setFormData({ firstName: "", lastName: "", email: "", password: "" });
