@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -14,12 +14,14 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+// import { UserDataContext } from "@/context/UserContext";
 
 const Login = () => {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  // const { user, setUser } = useContext(UserDataContext);
   const [user, setUser] = useState({});
   // console.log(user);
 
@@ -38,6 +40,7 @@ const Login = () => {
         const data = response.data;
         console.log("Logged in user:", data.user);
         setUser(data.user);
+        localStorage.setItem("userToken", data.token);
 
         toast.success("Login successful! 🎉", {
           position: "top-center",
@@ -50,7 +53,7 @@ const Login = () => {
         });
 
         setTimeout(() => {
-          router.push("/dashboard"); // Change to your desired route after login
+          router.push("/user/dashboard"); // Change to your desired route after login
         }, 3000);
 
         setEmail("");
